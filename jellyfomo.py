@@ -78,7 +78,7 @@ def add_movies(user_name, user_id):
             print(f"Error updating movie {movie['Name']} tags: {e}")
             continue
         active_movies.append(movie)
-        print(f"Aded #jellyfomo-{user_name} to movie {movie['Name']}")
+        print(f"Added #jellyfomo-{user_name} to movie {movie['Name']}")
 
 
 def remove_watched_movies(user_name, user_id):
