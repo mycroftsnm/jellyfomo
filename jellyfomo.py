@@ -1,12 +1,13 @@
 import requests
 import random
 import os
+import time
 
-JELLYFIN_API_KEY = os.environ["JELLYFIN_API_KEY"]
 USER_NAMES = os.environ["USER_NAMES"].split(",")
+JELLYFIN_URL = os.environ.get("JELLYFIN_URL")
+JELLYFIN_API_KEY = os.environ["JELLYFIN_API_KEY"]
 MOVIES_LIMIT = int(os.environ.get("MOVIES_LIMIT", 3))
-JELLYFIN_URL = os.environ.get("JELLYFIN_URL", "http://localhost:8096")
-
+REFRESH_TIME = int(os.environ.get("REFRESH_TIME", 30))
 
 HEADERS = {
     "Authorization": f'MediaBrowser Token="{JELLYFIN_API_KEY}"',
@@ -150,6 +151,8 @@ if __name__ == "__main__":
             continue
         users.append((user_name, user_id))
 
-    for user_name, user_id in users:
-        remove_watched_movies(user_name, user_id)
-        add_movies(user_name, user_id)
+    while True:
+        for user_name, user_id in users:
+            remove_watched_movies(user_name, user_id)
+            add_movies(user_name, user_id)
+        time.sleep(REFRESH_TIME)
