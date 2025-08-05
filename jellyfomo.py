@@ -3,11 +3,11 @@ import random
 import os
 import time
 
-USER_NAMES = os.environ["USER_NAMES"].split(",")
-JELLYFIN_URL = os.environ.get("JELLYFIN_URL")
-JELLYFIN_API_KEY = os.environ["JELLYFIN_API_KEY"]
+USER_NAMES = os.environ.get("USER_NAMES", None)
 MOVIES_LIMIT = int(os.environ.get("MOVIES_LIMIT", 3))
 REFRESH_TIME = int(os.environ.get("REFRESH_TIME", 30))
+JELLYFIN_URL = os.environ.get("JELLYFIN_URL", None)
+JELLYFIN_API_KEY = os.environ.get("JELLYFIN_API_KEY", None)
 
 HEADERS = {
     "Authorization": f'MediaBrowser Token="{JELLYFIN_API_KEY}"',
@@ -143,6 +143,20 @@ def get_user_id(user_name):
     return user['Id'] if user else None
 
 if __name__ == "__main__":
+    if JELLYFIN_API_KEY is None:
+        print("Error: Missing JELLYFIN_API_KEY environment variable.")
+        exit(1)
+
+    if JELLYFIN_URL is None:
+        print("Error: Missing JELLYFIN_URL environment variable.")
+        exit(1)
+
+    if not USER_NAMES:
+        print("Error: Missing USER_NAMES environment variable.")
+        exit(1)
+
+    USER_NAMES = USER_NAMES.split(",")
+
     users = []
     for user_name in USER_NAMES:
         user_id = get_user_id(user_name)
