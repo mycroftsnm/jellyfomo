@@ -5,7 +5,7 @@ import time
 
 USER_NAMES = os.environ.get("USER_NAMES", None)
 MOVIES_LIMIT = int(os.environ.get("MOVIES_LIMIT", 3))
-REFRESH_TIME = int(os.environ.get("REFRESH_TIME", 30))
+REFRESH_INTERVAL = int(os.environ.get("REFRESH_INTERVAL", 30))
 JELLYFIN_URL = os.environ.get("JELLYFIN_URL", None)
 JELLYFIN_API_KEY = os.environ.get("JELLYFIN_API_KEY", None)
 
@@ -169,4 +169,4 @@ if __name__ == "__main__":
         for user_name, user_id in users:
             remove_watched_movies(user_name, user_id)
             add_movies(user_name, user_id)
-        time.sleep(REFRESH_TIME)
+        time.sleep(REFRESH_INTERVAL)
