@@ -1,0 +1,12 @@
+services:
+  jellyfomo:
+    image: ghcr.io/mycroftsnm/jellyfomo:latest
+    container_name: jellyfomo
+    environment:
+      - JELLYFIN_URL=         # URL of your Jellyfin server (e.g., http://localhost:8096)
+      - JELLYFIN_API_KEY=     # Generable at Dashboard > Advanced > API Keys, in jellyfin web UI
+      - USER_NAMES=           # Comma-separated list of usernames to monitor (e.g., user1,user2)
+      - MOVIES_LIMIT=3        # Quantity of movies available at the same time
+      - REFRESH_INTERVAL=30   # Interval in seconds to check for watched movies
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
