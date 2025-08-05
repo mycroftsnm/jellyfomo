@@ -165,6 +165,13 @@ if __name__ == "__main__":
             continue
         users.append((user_name, user_id))
 
+    if not users:
+        print("No valid users found, exiting.")
+        exit(1)
+
+    print("Starting jellyfomo for users:", ", ".join([u[0] for u in users]),
+          f"\nwith a limit of {MOVIES_LIMIT} movies each and a refresh interval of {REFRESH_INTERVAL} seconds.")
+
     while True:
         for user_name, user_id in users:
             remove_watched_movies(user_name, user_id)
